@@ -1,15 +1,14 @@
-import Discord from 'discord.js';
+import { Client as DiscordClient, Message } from 'discord.js';
 import { MessageHandler } from './MessageHandler';
-import dotenv from 'dotenv';
+import { TOKEN } from './globals'
 
 export class Client {
-    client : Discord.Client;
+    client : DiscordClient;
     MessageHandler : MessageHandler
 
     constructor() {
-        dotenv.config();
         
-        this.client = new Discord.Client();
+        this.client = new DiscordClient();
         this.MessageHandler = new MessageHandler(this);
 
         this.AssignEvents();
@@ -22,11 +21,11 @@ export class Client {
         });
         console.log('onReady assigned');
 
-        this.client.on('message', (msg : Discord.Message) => this.MessageHandler.onMessage(msg));
+        this.client.on('message', (msg : Message) => this.MessageHandler.onMessage(msg));
         console.log('onMessage assigned');
     }
 
     Login() : void {
-        this.client.login(process.env.TOKEN);
+        this.client.login(TOKEN);
     }
 }

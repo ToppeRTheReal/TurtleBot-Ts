@@ -1,8 +1,8 @@
 import { Client } from './bot';
 import { ICommand } from './Commands/ICommand';
 import { q } from './Commands/q';
-import Discord from 'discord.js';
-import dotenv from 'dotenv';
+import { Message } from 'discord.js';
+import { help } from './Commands/help';
 
 export class MessageHandler {
     Client : Client;
@@ -11,8 +11,6 @@ export class MessageHandler {
     Commands : ICommand[];
 
     constructor(client : Client) {
-        dotenv.config();
-
         this.Client = client;
         this.Prefix = '!';
         this.Commands = [];
@@ -22,9 +20,10 @@ export class MessageHandler {
 
     AssignCommands() : void {
         this.Commands.push(new q(this));
+        this.Commands.push(new help(this));
     }
 
-    async onMessage(msg : Discord.Message) : Promise<any> {
+    async onMessage(msg : Message) : Promise<any> {
         if(!msg.content.startsWith(this.Prefix)) return;
         if(msg.author.bot) return;
 
@@ -40,7 +39,7 @@ export class MessageHandler {
         return 0;
     }
 
-    GetArgsFromMessage(msg : Discord.Message) : string[] {
+    GetArgsFromMessage(msg : Message) : string[] {
         let messages : string[] = [];
 
         let commands = msg.content.split(' ');
@@ -51,7 +50,7 @@ export class MessageHandler {
         return messages;
     }
 
-    GetCommand(msg : Discord.Message) : string {
+    GetCommand(msg : Message) : string {
         return msg.content.split(' ')[0].replace(this.Prefix, '');
     }
 }

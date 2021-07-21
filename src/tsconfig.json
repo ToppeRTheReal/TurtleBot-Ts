@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "sourceRoot": "ts/",
+        "target": "ES6",
+        "module": "commonjs",
+        "strict": true,
+        "outDir": "dist",
+        "removeComments": true
+    },
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}
